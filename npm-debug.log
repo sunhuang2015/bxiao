@@ -1,0 +1,59 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/node', '/usr/bin/npm', '-g', 'install', 'n' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.37
+4 verbose node symlink /usr/bin/node
+5 verbose cache add [ 'n', null ]
+6 verbose cache add name=undefined spec="n" args=["n",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: 'n',
+7 verbose parsed url   path: 'n',
+7 verbose parsed url   href: 'n' }
+8 silly lockFile d1854cae-n n
+9 verbose lock n /home/vagrant/.npm/d1854cae-n.lock
+10 silly lockFile d1854cae-n n
+11 silly lockFile d1854cae-n n
+12 verbose addNamed [ 'n', '' ]
+13 verbose addNamed [ null, '*' ]
+14 silly lockFile 6b58d7dc-n n@
+15 verbose lock n@ /home/vagrant/.npm/6b58d7dc-n.lock
+16 silly addNameRange { name: 'n', range: '*', hasData: false }
+17 verbose request where is /n
+18 verbose request registry https://registry.npmjs.org/
+19 verbose request id accee8067f5ee824
+20 verbose url raw /n
+21 verbose url resolving [ 'https://registry.npmjs.org/', './n' ]
+22 verbose url resolved https://registry.npmjs.org/n
+23 verbose request where is https://registry.npmjs.org/n
+24 info trying registry request attempt 1 at 03:51:57
+25 http GET https://registry.npmjs.org/n
+26 info retry will retry, error on last attempt: Error: socket hang up
+27 info trying registry request attempt 2 at 03:53:10
+28 http GET https://registry.npmjs.org/n
+29 info retry will retry, error on last attempt: Error: socket hang up
+30 info trying registry request attempt 3 at 03:55:12
+31 http GET https://registry.npmjs.org/n
+32 silly lockFile 6b58d7dc-n n@
+33 silly lockFile 6b58d7dc-n n@
+34 error network socket hang up
+34 error network This is most likely not a problem with npm itself
+34 error network and is related to network connectivity.
+34 error network In most cases you are behind a proxy or have bad network settings.
+34 error network
+34 error network If you are behind a proxy, please make sure that the
+34 error network 'proxy' config is set properly.  See: 'npm help config'
+35 error System Linux 3.13.0-24-generic
+36 error command "/usr/bin/node" "/usr/bin/npm" "-g" "install" "n"
+37 error cwd /home/vagrant/Code/BaoXiao
+38 error node -v v0.10.37
+39 error npm -v 1.4.28
+40 error code ECONNRESET
+41 verbose exit [ 1, true ]
