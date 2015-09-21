@@ -30,7 +30,9 @@ class Employee extends Model
         'name',
         'register_date',
         'service_date',
-        'remark'
+        'telephone',
+        'bank_account'
+
     ];
 
 
@@ -51,5 +53,10 @@ class Employee extends Model
 
     public function category(){
         return $this->belongsTo('App\Category');
+    }
+
+    public function setBankAccountAttribute($value)
+    {
+        $this->attributes['bank_account'] = trim($value);
     }
 }

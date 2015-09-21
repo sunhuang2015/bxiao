@@ -24,7 +24,8 @@ class CreateEmployeesTable extends Migration
             $table->date('register_date')->default('2010-01-01');
             $table->date('service_date')->default('2099-01-01');
             $table->softDeletes();
-            $table->text('remark')->nullable();
+            $table->text('telephone')->nullable();
+            $table->string('bank_account')->unique();
             $table->string('email')->nullable();
 
             $table->timestamps();

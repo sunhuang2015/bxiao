@@ -167,9 +167,10 @@ class UploadController extends Controller
         Excel::load($destfile,function($reader){
             $rules=[
                 //
-                'number'=>'required||unique:employees',
+                'number'=>'required|unique:employees',
                 'company_id'=>'required|exists:companies,id',
                 'department_id'=>'required|exists:departments,id',
+                'bank_account'=>'required|unique:employees'
             ];
             $sheetsCount=$reader->getSheetCount();
 
@@ -192,7 +193,8 @@ class UploadController extends Controller
                     $employee['level_id']=Level::where('credit',400)->value('id');
                     $employee['category_id']=Category::where('code',1)->value('id');
                     $employee['status_id']=Status::where('code',1)->value('id');
-                    $employee['remark']=$sheets[$j][4];
+                    $employee['telephone']=$sheets[$j][4];
+                    $employee['bank_account']=$sheets[$j][8];
                     $emp_v=\Validator::make($employee,$rules);
                     if($emp_v->fails()){
 
