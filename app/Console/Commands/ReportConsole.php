@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
+use Carbon\Carbon;
 use Illuminate\Console\Command;
-
+use App\Employee;
+use App\Report;
+use Illuminate\Validation\Validator;
 class ReportConsole extends Command
 {
     /**
@@ -38,5 +41,24 @@ class ReportConsole extends Command
     public function handle()
     {
         //
+        $employees=Employee::all();
+        $rules=[
+          'employee_id'=>'unique_with:reports,months'
+        ];
+        foreach($employees as $employees){
+           // $report=new Report();
+            $report['employee_id']=$employees->id;
+            $report['months']='2015-8-1';
+            $report['months_string']=$report['months'];
+            $report['fee']=0;
+            $report['flag_id']=1;
+            $v=\Validator::make($report,$rules);
+            if($v->fails()){
+
+            }else{
+                $r=Report::create($report);
+            }
+    }
+
     }
 }
