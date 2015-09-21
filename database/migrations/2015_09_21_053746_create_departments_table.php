@@ -20,6 +20,7 @@ class CreateDepartmentsTable extends Migration
             $table->string('costcenter');
             $table->timestamps();
             $table->unique(array('company_id','name','costcenter'));
+            $table->softDeletes();
         });
     }
 
