@@ -29,7 +29,8 @@ class Employee extends Model
         'number',
         'name',
         'register_date',
-        'service_date'
+        'service_date',
+        'remark'
     ];
 
 

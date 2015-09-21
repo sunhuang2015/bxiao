@@ -30,6 +30,6 @@ class Department extends Model
 
     public static $rule=[
       "company_id"=>'exists:companies,id',
-        'name'=>'unique_with:departments,company_id,costcenter'
+        'name'=>'unique_with:departments,company'
     ];
 }

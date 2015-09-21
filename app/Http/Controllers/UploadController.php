@@ -8,7 +8,13 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Illuminate\Validation\Validator;
+use App\Company;
+use App\Department;
+use App\Level;
+use App\Category;
+use App\Status;
+use App\Employee;
 class UploadController extends Controller
 {
     /**
@@ -61,10 +67,18 @@ class UploadController extends Controller
         $path=base_path()."/public/up/";
         $dest_file= $path."/".$filename;
         $request->file('uploadFile')->move($path,$filename);
+        switch($category){
+            case 'DEPT':
+                $this->importDept($dest_file);
+                break;
+            case 'EMPLOYEE':
+                $this->importEMP($dest_file);
+                break;
+        }
 
-        Excel::load($dest_file,function($reader){
+        return back();
 
-        });
+
 
     }
 
@@ -112,4 +126,87 @@ class UploadController extends Controller
     {
         //
     }
+
+
+    public function importDept($destfile){
+        Excel::load($destfile,function($reader){
+            $rules=[
+                //
+                'name'=>'required|unique_with:departments,company_id,costcenter',
+                'company_id'=>'exists:companies,id',
+                'costcenter'=>'required'
+            ];
+            $sheetsCount=$reader->getSheetCount();
+
+            for($i=0;$i<$sheetsCount;$i++){
+                $sheets=$reader->getSheet($i)->toArray();
+                $company_name=$reader->getSheet($i)->getTitle();
+                $dept['company_id']=Company::where('name',$company_name)->value('id');
+                $sheetCount=count($sheets);
+                for($j=6;$j<$sheetCount;$j++){
+                    $dept['name']=$sheets[$j][1];
+                    $dept['costcenter']=$sheets[$j][10];
+                    $dept_v=\Validator::make($dept,$rules);
+                    if($dept_v->fails()){
+
+                    } else{
+                        Department::create($dept);
+
+                    }
+                }
+            }
+
+
+
+            //END
+        });
+    }
+
+
+    public function importEMP($destfile){
+        Excel::load($destfile,function($reader){
+            $rules=[
+                //
+                'number'=>'required||unique:employees',
+                'company_id'=>'required|exists:companies,id',
+                'department_id'=>'required|exists:departments,id',
+            ];
+            $sheetsCount=$reader->getSheetCount();
+
+            for($i=0;$i<$sheetsCount;$i++){
+                $sheets=$reader->getSheet($i)->toArray();
+                $company_name=$reader->getSheet($i)->getTitle();
+                $dept['company_id']=Company::where('name',$company_name)->value('id');
+                $sheetCount=count($sheets);
+                for($j=6;$j<$sheetCount;$j++){
+                    // Get Department ID;
+                    $dept['name']=$sheets[$j][1];
+                    $dept['costcenter']=$sheets[$j][10];
+                    $employee['company_id']= $dept['company_id'];
+                    $employee['department_id']=Department::where('name',$dept['name'])
+                        ->where('company_id',$dept['company_id'])
+                        ->where('costcenter',$dept['costcenter'])
+                        ->value('id');
+                    $employee['name']=$sheets[$j][2];
+                    $employee['number']=$sheets[$j][3];
+                    $employee['level_id']=Level::where('credit',400)->value('id');
+                    $employee['category_id']=Category::where('code',1)->value('id');
+                    $employee['status_id']=Status::where('code',1)->value('id');
+                    $employee['remark']=$sheets[$j][4];
+                    $emp_v=\Validator::make($employee,$rules);
+                    if($emp_v->fails()){
+
+                    }else{
+                        Employee::create($employee);
+                    }
+                }
+            }
+
+
+
+            //END
+        });
+    }
+
+
 }
