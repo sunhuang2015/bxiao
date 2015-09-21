@@ -48,7 +48,7 @@ class ReportConsole extends Command
         foreach($employees as $employees){
            // $report=new Report();
             $report['employee_id']=$employees->id;
-            $report['months']='2015-8-1';
+            $report['months']='2015-07-01';
             $report['months_string']=$report['months'];
             $report['fee']=0;
             $report['flag_id']=1;

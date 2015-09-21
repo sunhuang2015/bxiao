@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use App\Report;
 class ReportController extends Controller
 {
     /**
@@ -13,9 +13,15 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($month)
     {
         //
+        $reports=Report::with('employee','employee.company','employee.department','employee.level','flag')
+            ->where('months','=',$month)
+            ->get();
+
+        return view('report.index')->with('reports',$reports);
+
     }
 
     /**

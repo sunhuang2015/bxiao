@@ -59,4 +59,8 @@ class Employee extends Model
     {
         $this->attributes['bank_account'] = trim($value);
     }
+
+    public function report(){
+        return $this->hasMany('App\Report');
+    }
 }

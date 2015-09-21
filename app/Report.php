@@ -14,4 +14,13 @@ class Report extends Model
         'months_string',
         'fee',
         'flag_id'];
+
+
+    public function employee(){
+        return $this->belongsTo('App\Employee');
+    }
+
+    public function flag(){
+        return $this->belongsTo('App\Flag');
+    }
 }

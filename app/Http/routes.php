@@ -26,3 +26,5 @@ Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::resource('upload','UploadController');
 
 Route::resource('employee','EmployeeController');
+
+Route::get('report/{month}','ReportController@index');
