@@ -27,4 +27,9 @@ class Department extends Model
         return $this->attributes['name'].
         '_' . $this->attributes['costcenter'];
     }
+
+    public static $rule=[
+      "company_id"=>'exists:companies,id',
+        'name'=>'unique_with:departments,company_id,costcenter'
+    ];
 }
