@@ -14,4 +14,17 @@ class Department extends Model
     public function company(){
         return $this->belongsTo('App\Company');
     }
+
+    protected $appends = ['full_name'];
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
+    }
+
+    public function getFullNameAttribute()
+    {
+        return $this->attributes['name'].
+        '_' . $this->attributes['costcenter'];
+    }
 }
