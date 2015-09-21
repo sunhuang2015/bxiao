@@ -1,5 +1,6 @@
 <!-- resources/views/auth/login.blade.php -->
-
+@extends('tpl.master')
+@section('content')
 <form method="POST" action="/auth/login">
     {!! csrf_field() !!}
 
@@ -21,3 +22,4 @@
         <button type="submit">Login</button>
     </div>
 </form>
+    @endsection
