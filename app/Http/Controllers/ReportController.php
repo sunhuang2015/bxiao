@@ -2,17 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Employee;
-use App\Company;
-use App\Department;
-use App\Level;
-use App\Category;
-use App\Status;
-class EmployeeController extends Controller
+
+class ReportController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -22,12 +16,6 @@ class EmployeeController extends Controller
     public function index()
     {
         //
-        $employees=Employee::with(['company','department','status','level','category'])
-           // ->where('status_id',1)
-           // ->Where('service_date','>',Carbon::now()->toDateString())
-            ->get(['number','name','company_id','status_id','department_id','level_id','bank_account','telephone']);
-
-        return view('employee.index')->with('employees',$employees);
     }
 
     /**
