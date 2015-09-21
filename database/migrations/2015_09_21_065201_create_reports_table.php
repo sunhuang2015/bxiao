@@ -20,8 +20,9 @@ class CreateReportsTable extends Migration
             $table->decimal('fee')->default(0);
             $table->integer('flag_id')->unsigned();
             $table->timestamps();
-
+            $table->string('reportfile')->nullable();
             $table->foreign('employee_id')->references('id')->on('employees')->onDelete('cascade');
+            $table->foreign('flag_id')->references('id')->on('flags')->onDelete('cascade');
             $table->softDeletes();
             $table->unique(array('employee_id','months'));
         });

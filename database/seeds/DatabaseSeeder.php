@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(CompanyTableSeeder::class);
         $this->call(StatusTableSeeder::class);
         $this->call(CategoryTableSeeder::class);
+        $this->call(FlagTableSeeder::class);
         Model::reguard();
     }
 }
