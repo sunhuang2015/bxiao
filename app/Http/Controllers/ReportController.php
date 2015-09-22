@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Report;
+use Carbon\Carbon;
 class ReportController extends Controller
 {
     /**
@@ -13,14 +14,26 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($month)
+    public static $m;
+    public function index($month='2015-09-01')
     {
         //
+        if(isset($month)){
+            $reports=Report::with('employee','employee.company','employee.department','employee.level','flag')
+                ->where('months','=',$month)
+                ->get();
+        }else
+            $month=Carbon::now()->firstOfMonth();
         $reports=Report::with('employee','employee.company','employee.department','employee.level','flag')
             ->where('months','=',$month)
             ->get();
-
-        return view('report.index')->with('reports',$reports);
+        $reportStatus['counts']=Report::where('months','=',$month)
+                    ->where('flag_id',1)
+                    ->count();
+        $reportStatus['total']=Report::where('months','=',$month)->count();
+        return view('report.index')
+                ->with('reports',$reports)
+                ->with('reportStatus',$reportStatus);
 
     }
 

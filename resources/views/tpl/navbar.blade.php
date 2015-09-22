@@ -38,13 +38,19 @@
                 <li class="grey">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <i class="ace-icon fa fa-tasks"></i>
-                        <span class="badge badge-grey">4</span>
+                        <span class="badge badge-grey">
+                            @if(isset($reportStatus))
+                                {!! $reportStatus['counts'] !!}
+                            @endif
+                        </span>
                     </a>
 
                     <ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
                         <li class="dropdown-header">
                             <i class="ace-icon fa fa-check"></i>
-                            4 Tasks to complete
+                            @if(isset($reportStatus))
+                                {!!  $reportStatus['total']-$reportStatus['counts'] !!}
+                                @endif 已经完成
                         </li>
 
                         <li class="dropdown-content">
@@ -52,12 +58,18 @@
                                 <li>
                                     <a href="#">
                                         <div class="clearfix">
-                                            <span class="pull-left">Task Name</span>
-                                            <span class="pull-right">65%</span>
+                                            <span class="pull-left">Complete</span>
+                                            <span class="pull-right">  @if(isset($reportStatus))
+                                                    {!!  $reportStatus['total']-$reportStatus['counts'] !!}%
+                                                @endif</span>
                                         </div>
 
                                         <div class="progress progress-mini">
-                                            <div style="width:65%" class="progress-bar"></div>
+                                            @if(isset($reportStatus))
+                                            <div style="width:{!! ($reportStatus['counts']/$reportStatus['total'])*100 !!}
+
+                                                    %" class="progress-bar"></div>
+                                            @endif
                                         </div>
                                     </a>
                                 </li>

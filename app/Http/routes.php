@@ -10,7 +10,7 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
+use App\Company;
 Route::get('/home', function () {
     return view('welcome');
 });
@@ -27,6 +27,40 @@ Route::resource('upload','UploadController');
 
 Route::resource('employee','EmployeeController');
 
-Route::get('report/{month}','ReportController@index')->where('month', '(\d)(\d)(\d)(\d)-[0-1]?[1-9]-[0-3]?[1-9]');;
-
+Route::get('report/{month?}','ReportController@index')->where('month', '(\d)(\d)(\d)(\d)-[0-1]?[1-9]-[0-3]?[1-9]');;
+//Route::get('report/{month?}','ReportController@index');
 Route::resource('report','ReportController');
+
+Route::get('export',function(){
+
+    Excel::create('Filename', function($excel) {
+
+        // Call writer methods here
+        $excel->setTitle('Our new awesome title');
+
+        // Chain the setters
+        $excel->setCreator('Maatwebsite')
+            ->setCompany('Maatwebsite');
+
+        // Call them separately
+        $excel->setDescription('A demonstration to change the file properties');
+
+        $companys=Company::all();
+        foreach($companys as $company)
+        {
+            $this->company_name=$company->name;
+            $this->company_id=$company->id;
+            $excel->sheet($this->company_name, function($sheet) {
+
+                $employees=\App\Reportview::where('公司',$this->company_name)->get()->toArray();
+                $sum=\App\Reportview::sum('费用');
+                dd($sum);
+                $sheet->with($employees);
+
+            });
+        }
+
+
+
+    })->export('xlsx');
+});
