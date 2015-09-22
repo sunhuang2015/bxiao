@@ -27,4 +27,6 @@ Route::resource('upload','UploadController');
 
 Route::resource('employee','EmployeeController');
 
-Route::get('report/{month}','ReportController@index');
+Route::get('report/{month}','ReportController@index')->where('month', '(\d)(\d)(\d)(\d)-[0-1]?[1-9]-[0-3]?[1-9]');;
+
+Route::resource('report','ReportController');

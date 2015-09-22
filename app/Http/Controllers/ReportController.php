@@ -77,6 +77,11 @@ class ReportController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $data['fee']=$request->get('fee');
+        $data['flag_id']=2;
+        Report::find($id)->update($data);
+        return back();
     }
 
     /**

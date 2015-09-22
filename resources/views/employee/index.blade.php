@@ -11,14 +11,9 @@
             </ul>
         </div>
     @endif
-    <table class="table table-striped table-bordered table-hover">
+    <table id="employeeTable" class="table table-striped table-bordered table-hover">
         <thead>
-        <th class="center">
-            <label class="pos-rel">
-                <input type="checkbox" class="ace">
-                <span class="lbl"></span>
-            </label>
-        </th>
+
             <th>工号</th>
             <th>姓名</th>
             <th>公司</th>
@@ -33,10 +28,7 @@
         <tbody>
         @foreach($employees as $employee)
             <tr>
-                <td><label class="pos-rel">
-                        <input type="checkbox" class="ace">
-                        <span class="lbl"></span>
-                    </label></td>
+
                 <td>{!! $employee->number !!}</td>
                 <td>{!! $employee->name !!}</td>
                 <td>{!! $employee->company->name !!}</td>
@@ -55,4 +47,19 @@
         </tbody>
     </table>
 
+@endsection
+
+@section('javascript')
+
+    <script src="../assets/js/dataTables/jquery.dataTables.js"></script>
+    <script src="../assets/js/dataTables/jquery.dataTables.bootstrap.js "></script>
+    <script>
+        $(document).ready(function(){
+            $("#employeeTable").wrap("<div class='dataTables_borderWrap' />")
+                    .dataTable({
+                        bAutoWidth: false//for better responsiveness
+
+                    });
+        }); </script>
+    </script>
 @endsection
